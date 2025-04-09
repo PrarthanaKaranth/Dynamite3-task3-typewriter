@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Awesome Typewriter</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&family=Fira+Code&display=swap" rel="stylesheet">
+  <style>
+    body {
+      background: linear-gradient(135deg, #fceabb, #f8b500);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+      font-family: 'Poppins', sans-serif;
+    }
+
+    .typewriter-container {
+      text-align: center;
+      color: #222;
+      background: rgba(255, 255, 255, 0.8);
+      padding: 40px 60px;
+      border-radius: 20px;
+      box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+      max-width: 800px;
+    }
+
+    .typewriter-text::after {
+      content: '|';
+      animation: blink 0.7s infinite;
+      color: #111;
+      font-weight: bold;
+      margin-left: 5px;
+    }
+
+    @keyframes blink {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0; }
+    }
+
+    .big {
+      font-size: 36px;
+      font-weight: 700;
+      color: #222;
+    }
+
+    .highlight {
+      color: #e91e63;
+      font-weight: 600;
+      font-size: 30px;
+    }
+
+    .small {
+      font-size: 20px;
+      color: #444;
+      font-style: italic;
+    }
+
+    .code {
+      font-family: 'Fira Code', monospace;
+      background: #222;
+      color: #0f0;
+      padding: 6px 10px;
+      border-radius: 5px;
+      display: inline-block;
+      font-size: 18px;
+    }
+  </style>
+</head>
+<body>
+
+<div class="typewriter-container">
+  <span id="typewriter" class="typewriter-text"></span>
+</div>
+
+<script>
+  const texts = [
+    '<span class="big">Welcome to My Awesome Portfolio</span>',
+    '<span class="highlight">Passionate Full-Stack Developer</span>',
+    '<span class="code">Skills: HTML | CSS | JavaScript | React</span>',
+    '<span class="small">Creating beautiful, fast & responsive websites.</span>',
+    '<span class="big highlight">Let\'s Collaborate & Build Something Great! ✨</span>'
+  ];
+
+  let index = 0;
+  let charIndex = 0;
+  let currentText = '';
+  let isDeleting = false;
+  const speed = 60;
+  const pauseTime = 1800;
+  const typewriter = document.getElementById("typewriter");
+
+  function type() {
+    const fullText = texts[index];
+    if (isDeleting) {
+      currentText = fullText.substring(0, charIndex--);
+    } else {
+      currentText = fullText.substring(0, charIndex++);
+    }
+
+    typewriter.innerHTML = currentText;
+
+    let typingSpeed = speed;
+    if (isDeleting) typingSpeed /= 2;
+
+    if (!isDeleting && charIndex === fullText.length) {
+      isDeleting = true;
+      typingSpeed = pauseTime;
+    } else if (isDeleting && charIndex === 0) {
+      isDeleting = false;
+      index = (index + 1) % texts.length;
+      typingSpeed = 600;
+    }
+
+    setTimeout(type, typingSpeed);
+  }
+
+  type();
+</script>
+
+</body>
+</html>
